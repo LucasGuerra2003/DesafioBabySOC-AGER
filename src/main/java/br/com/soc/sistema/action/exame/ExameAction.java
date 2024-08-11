@@ -41,12 +41,18 @@ public class ExameAction extends Action {
 	}
 	
 	public String editar() {
-		if(exameVo.getRowid() == null)
-			return REDIRECT;
+		if(exameVo.getNome() == null)
+			return EDIT;
+
+		business.salvarExame(exameVo);
+
+		return REDIRECT;
+	}
+	
+	public String excluir() {		
+		exameVo = business.excluirExamePor(exameVo.getRowid());
 		
-		exameVo = business.buscarExamePor(exameVo.getRowid());
-		
-		return INPUT;
+		return REDIRECT;
 	}
 	
 	public List<OpcoesComboBuscarExames> getListaOpcoesCombo(){

@@ -25,8 +25,13 @@ public class ExameBusiness {
 		try {
 			if(exameVo.getNome().isEmpty())
 				throw new IllegalArgumentException("Nome nao pode ser em branco");
+			else if (exameVo.getRowid().isEmpty()) {
+				dao.insertExame(exameVo);
+			}
+			else {
+				dao.updateExame(exameVo);
+			}
 			
-			dao.insertExame(exameVo);
 		} catch (Exception e) {
 			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
 		}
@@ -58,6 +63,27 @@ public class ExameBusiness {
 		try {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
+		}catch (NumberFormatException e) {
+			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+		}
+	}
+	
+	public ExameVo updateExame(ExameVo exameVo) {
+		try {
+			if(exameVo.getNome().isEmpty())
+				throw new IllegalArgumentException("Nome nao pode ser em branco");
+			
+			return dao.updateExame(exameVo);
+		} catch (Exception e) {
+			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
+		}
+		
+	}
+
+	public ExameVo excluirExamePor(String codigo) {
+		try {
+			Integer cod = Integer.parseInt(codigo);
+			return dao.deleteByCodigo(cod);
 		}catch (NumberFormatException e) {
 			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
 		}
