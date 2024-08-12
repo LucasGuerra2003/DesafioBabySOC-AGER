@@ -12,71 +12,72 @@ import java.util.List;
 
 import br.com.soc.sistema.dao.Dao;
 import br.com.soc.sistema.vo.ExameFuncionarioVo;
+import br.com.soc.sistema.vo.RelatorioVo;
 
 public class ExameFuncionarioDao extends Dao {
 
 	public void insertExameFuncionario(ExameFuncionarioVo exameFuncionarioVo) {
-	    StringBuilder query = new StringBuilder("INSERT INTO funcionario_exame (funcionario_id, exame_id, data_realizacao) VALUES (?, ?, ?)");
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    java.util.Date dataUtil = null;
+		StringBuilder query = new StringBuilder("INSERT INTO funcionario_exame (funcionario_id, exame_id, data_realizacao) VALUES (?, ?, ?)");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		java.util.Date dataUtil = null;
 
-	    try {
-	        dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
+		try {
+			dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
-	    java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
+		java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
 
-	    try (
-	        Connection con = getConexao();
-	        PreparedStatement ps = con.prepareStatement(query.toString())
-	    ) {
-	        ps.setString(1, exameFuncionarioVo.getFuncionarioId());
-	        ps.setString(2, exameFuncionarioVo.getExameId());
-	        ps.setDate(3, sqlDate);
+		try (
+				Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())
+				) {
+			ps.setString(1, exameFuncionarioVo.getFuncionarioId());
+			ps.setString(2, exameFuncionarioVo.getExameId());
+			ps.setDate(3, sqlDate);
 
-	        ps.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Erro ao inserir o exame do funcionário", e);
-	    }
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao inserir o exame do funcionário", e);
+		}
 	}
 
 
 	public ExameFuncionarioVo updateExameFuncionario(ExameFuncionarioVo exameFuncionarioVo) {
-	    StringBuilder query = new StringBuilder("UPDATE funcionario_exame SET exame_id = ?, data_realizacao = ? ")
-	            .append("WHERE rowid = ?");
-	    
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
-	    java.util.Date dataUtil = null;
-	    
+		StringBuilder query = new StringBuilder("UPDATE funcionario_exame SET exame_id = ?, data_realizacao = ? ")
+				.append("WHERE rowid = ?");
 
-	    try {
-	        dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Erro ao converter a data", e);
-	    }
-
-	    java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
+		java.util.Date dataUtil = null;
 
 
-	    try (Connection con = getConexao();
-	         PreparedStatement ps = con.prepareStatement(query.toString())) {
+		try {
+			dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao converter a data", e);
+		}
 
-	        ps.setString(1, exameFuncionarioVo.getExameId());
-	        ps.setDate(2, sqlDate);
-	        ps.setString(3, exameFuncionarioVo.getRowid());
+		java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
 
-	        ps.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return exameFuncionarioVo; 
+
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
+
+			ps.setString(1, exameFuncionarioVo.getExameId());
+			ps.setDate(2, sqlDate);
+			ps.setString(3, exameFuncionarioVo.getRowid());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exameFuncionarioVo; 
 	}
 
-	 
+
 
 	public ExameFuncionarioVo deleteByCodigo(Integer id) {
 		StringBuilder query = new StringBuilder("DELETE FROM funcionario_exame ")
@@ -95,79 +96,159 @@ public class ExameFuncionarioDao extends Dao {
 	}
 
 	public List<ExameFuncionarioVo> findExamesByFuncionarioId(Integer funcionarioId) {
-	    StringBuilder query = new StringBuilder("SELECT fe.rowid AS funcionario_exame_id, e.rowid AS exame_id, e.nm_exame, fe.data_realizacao, f.nm_funcionario ")
-	            .append("FROM funcionario_exame fe ")
-	            .append("INNER JOIN exame e ON fe.exame_id = e.rowid ")
-	            .append("INNER JOIN funcionario f ON fe.funcionario_id = f.rowid ")
-	            .append("WHERE fe.funcionario_id = ?");
+		StringBuilder query = new StringBuilder("SELECT fe.rowid AS funcionario_exame_id, e.rowid AS exame_id, e.nm_exame, fe.data_realizacao, f.nm_funcionario ")
+				.append("FROM funcionario_exame fe ")
+				.append("INNER JOIN exame e ON fe.exame_id = e.rowid ")
+				.append("INNER JOIN funcionario f ON fe.funcionario_id = f.rowid ")
+				.append("WHERE fe.funcionario_id = ?");
 
-	    List<ExameFuncionarioVo> examesFuncionarios = new ArrayList<>();
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		List<ExameFuncionarioVo> examesFuncionarios = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
 
-	    try (Connection con = getConexao();
-	         PreparedStatement ps = con.prepareStatement(query.toString())) {
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
 
-	        ps.setInt(1, funcionarioId);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            while (rs.next()) {
-	                ExameFuncionarioVo vo = new ExameFuncionarioVo();
-	                vo.setRowid(rs.getString("funcionario_exame_id")); 
-	                vo.setExameId(rs.getString("exame_id"));
-	                vo.setNmExame(rs.getString("nm_exame"));
-	                vo.setNmFuncionario(rs.getString("nm_funcionario"));
-	                vo.setFuncionarioId("" + funcionarioId);
+			ps.setInt(1, funcionarioId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					ExameFuncionarioVo vo = new ExameFuncionarioVo();
+					vo.setRowid(rs.getString("funcionario_exame_id")); 
+					vo.setExameId(rs.getString("exame_id"));
+					vo.setNmExame(rs.getString("nm_exame"));
+					vo.setNmFuncionario(rs.getString("nm_funcionario"));
+					vo.setFuncionarioId("" + funcionarioId);
 
-	                Date sqlDate = rs.getDate("data_realizacao");
-	                if (sqlDate != null) {
-	                    vo.setDataRealizacao(sdf.format(sqlDate));
-	                }
+					Date sqlDate = rs.getDate("data_realizacao");
+					if (sqlDate != null) {
+						vo.setDataRealizacao(sdf.format(sqlDate));
+					}
 
-	                examesFuncionarios.add(vo);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+					examesFuncionarios.add(vo);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return examesFuncionarios;
+		return examesFuncionarios;
 	}
 
 	public boolean findExameRegistrado(ExameFuncionarioVo exameFuncionarioVo) {
-	    StringBuilder query = new StringBuilder("SELECT 1 FROM funcionario_exame ")
-	            .append("WHERE funcionario_id = ? AND exame_id = ? AND data_realizacao = ?");
-	    
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
-	    java.util.Date dataUtil = null;
+		StringBuilder query = new StringBuilder("SELECT 1 FROM funcionario_exame ")
+				.append("WHERE funcionario_id = ? AND exame_id = ? AND data_realizacao = ?");
 
-	    try {
-	        dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Erro ao converter a data", e);
-	    }
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
+		java.util.Date dataUtil = null;
 
-	    java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
+		try {
+			dataUtil = sdf.parse(exameFuncionarioVo.getDataRealizacao());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao converter a data", e);
+		}
 
-	    try (Connection con = getConexao();
-	         PreparedStatement ps = con.prepareStatement(query.toString())) {
-	        
-	        ps.setString(1, exameFuncionarioVo.getFuncionarioId());
-	        ps.setString(2, exameFuncionarioVo.getExameId());
-	        ps.setDate(3, sqlDate);
+		java.sql.Date sqlDate = (dataUtil != null) ? new java.sql.Date(dataUtil.getTime()) : null;
 
-	        try (ResultSet rs = ps.executeQuery()) {
-	            return rs.next(); 
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Erro ao verificar se o exame já está registrado", e);
-	    }
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
+
+			ps.setString(1, exameFuncionarioVo.getFuncionarioId());
+			ps.setString(2, exameFuncionarioVo.getExameId());
+			ps.setDate(3, sqlDate);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				return rs.next(); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao verificar se o exame já está registrado", e);
+		}
 	}
 
-	public List<ExameFuncionarioVo> findAllFuncionarioExames() {
+	public List<RelatorioVo> findAllFuncionarioExames() {
+		StringBuilder query = new StringBuilder("SELECT fe.rowid, f.rowid AS funcionario_id, f.nm_funcionario, " +
+						"e.rowid AS exame_id, e.nm_exame, fe.data_realizacao " +
+						"FROM funcionario_exame fe " +
+						"JOIN funcionario f ON fe.funcionario_id = f.rowid " +
+						"JOIN exame e ON fe.exame_id = e.rowid");
 		
-		
-		return null;
+		List<RelatorioVo> relatorios = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+
+
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString());
+				ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				RelatorioVo vo = new RelatorioVo();
+
+				vo.setRowid(rs.getString("rowid"));
+				vo.setFuncionarioId(rs.getString("funcionario_id"));
+				vo.setNmFuncionario(rs.getString("nm_funcionario"));
+				vo.setExameId(rs.getString("exame_id"));
+				vo.setNmExame(rs.getString("nm_exame"));
+				Date sqlDate = rs.getDate("data_realizacao");
+				if (sqlDate != null) {
+					vo.setDataRealizacao(sdf.format(sqlDate));
+				}
+
+				relatorios.add(vo);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+
+		return relatorios;
+	}
+
+
+	public List<RelatorioVo> findAllFuncionarioExamesPorData(String dataRealizacaoInicial,
+	        String dataRealizacaoFinal) {
+	    StringBuilder query = new StringBuilder("SELECT fe.rowid, f.rowid AS funcionario_id, f.nm_funcionario, " +
+	                    "e.rowid AS exame_id, e.nm_exame, fe.data_realizacao " +
+	                    "FROM funcionario_exame fe " +
+	                    "JOIN funcionario f ON fe.funcionario_id = f.rowid " +
+	                    "JOIN exame e ON fe.exame_id = e.rowid " +
+	                    "WHERE fe.data_realizacao BETWEEN ? AND ?");
+
+	    List<RelatorioVo> relatorios = new ArrayList<>();
+	    SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+	    SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	    
+	    try (Connection con = getConexao();
+	            PreparedStatement ps = con.prepareStatement(query.toString())) {
+
+	        String dataInicialFormatada = dbFormat.format(inputFormat.parse(dataRealizacaoInicial));
+	        String dataFinalFormatada = dbFormat.format(inputFormat.parse(dataRealizacaoFinal));
+
+	        ps.setString(1, dataInicialFormatada);
+	        ps.setString(2, dataFinalFormatada);
+	        
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                RelatorioVo vo = new RelatorioVo();
+
+	                vo.setRowid(rs.getString("rowid"));
+	                vo.setFuncionarioId(rs.getString("funcionario_id"));
+	                vo.setNmFuncionario(rs.getString("nm_funcionario"));
+	                vo.setExameId(rs.getString("exame_id"));
+	                vo.setNmExame(rs.getString("nm_exame"));
+	                Date sqlDate = rs.getDate("data_realizacao");
+	                if (sqlDate != null) {
+	                    vo.setDataRealizacao(inputFormat.format(sqlDate));
+	                }
+
+	                relatorios.add(vo);
+	            }
+	        }
+
+	    } catch (SQLException | ParseException e) {
+	        e.printStackTrace(); 
+	    }
+
+	    return relatorios;
 	}
 
 }

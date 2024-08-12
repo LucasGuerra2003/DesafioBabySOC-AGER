@@ -68,17 +68,6 @@ public class ExameBusiness {
 		}
 	}
 	
-	public ExameVo updateExame(ExameVo exameVo) {
-		try {
-			if(exameVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
-			return dao.updateExame(exameVo);
-		} catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
-		}
-		
-	}
 
 	public ExameVo excluirExamePor(String codigo) {
 		try {

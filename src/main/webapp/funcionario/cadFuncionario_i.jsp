@@ -18,11 +18,11 @@
 					<div class="row">
 						<div class="col-sm-5">
 							<s:url action="todosFuncionarios" var="todos" />
-							<a href="${todos}" class="btn btn-success">Funcionarios</a>
+							<a href="${todos}" class="btn btn-success"><s:text name="label.voltar" /></a>
 						</div>
 
 						<div class="col-sm">
-							<h5 class="card-title">Novo Funcionario</h5>
+							<h5 class="card-title"><s:text name="label.novo.funcionario" /></h5>
 						</div>
 					</div>
 				</div>

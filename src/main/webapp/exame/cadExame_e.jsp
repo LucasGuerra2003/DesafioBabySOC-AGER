@@ -18,7 +18,7 @@
 					<div class="row">
 						<div class="col-sm-5">
 							<s:url action="todosExames" var="todos" />
-							<a href="${todos}" class="btn btn-success">Exames</a>
+							<a href="${todos}" class="btn btn-success"><s:text name="label.voltar" /></a>
 						</div>
 
 						<div class="col-sm">

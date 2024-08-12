@@ -41,10 +41,23 @@
 			</result>
 			<result name="edit">/exameFuncionario/cadExameFuncionario_e.jsp
 			</result>
-			<result name="redirect" type="redirect">
+			<result name="redirect" type="redirectAction">
 				buscarExameFuncionario.action?exameFuncionarioVo.funcionarioId=%{exameFuncionarioVo.funcionarioId}
 			</result>
 		</action>
-
+		<action name="*RelatoriosExame"
+			class="br.com.soc.sistema.action.relatorioExames.RelatorioExamesAction"
+			method="{1}">
+			<result name="success">/relatorioExames/cadRelatorioExames_b.jsp
+			</result>
+			<result name="redirect" type="redirectAction">todoRelatoriosExame</result>
+		</action>
+		<action name="*RelatorioXLS"
+			class="br.com.soc.sistema.action.relatorioExames.RelatorioXLSAction"
+			method="{1}">
+			<result name="success">/relatorioExames/cadRelatorioXLS_gx.jsp
+			</result>
+			<result name="redirect" type="redirectAction">receberRelatorioXLS</result>
+		</action>
 	</package>
 </struts>

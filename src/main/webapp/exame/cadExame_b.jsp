@@ -65,8 +65,8 @@
 
 				<tfoot class="table-secondary">
 					<tr>
-						<td colspan="2"><s:url action="todosFuncionarios" var="todos" /> <a
-							href="${todos}" class="btn btn-success"> <s:text
+						<td colspan="2"><s:url action="todosFuncionarios" var="todos" />
+							<a href="${todos}" class="btn btn-success"> <s:text
 									name="label.funcionarios" />
 						</a></td>
 						<td class="text-end"><s:url action="novoExames" var="novo" />
@@ -103,10 +103,9 @@
 				<div class="modal-footer">
 					<a class="btn btn-secondary" data-bs-dismiss="modal"
 						aria-label="Close"> <s:text name="label.nao" />
+					</a> <a href="#" id="excluir" class="btn btn-primary"
+						style="width: 75px;" data-rowid=""> <s:text name="label.sim" />
 					</a>
-					<a href="#" id="excluir" class="btn btn-primary" style="width: 75px;" data-rowid="">
-                    <s:text name="label.sim"/>
-                </a> 
 				</div>
 			</div>
 		</div>

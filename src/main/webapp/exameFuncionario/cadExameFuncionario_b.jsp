@@ -17,27 +17,19 @@
 					<div class="row">
 						<div class="col-sm-5">
 							<s:url action="todosFuncionarios" var="todos" />
-							<a href="${todos}" class="btn btn-success">Voltar</a>
+							<a href="${todos}" class="btn btn-success"><s:text name="label.voltar" /></a>
 						</div>
 						<div class="col-sm">
-							<h5 class="card-title">Exames do Funcionário</h5>
+							<h5 class="card-title"><s:text name="label.exames.funcionarios" /></h5>
 						</div>
 						<div class="col-sm d-flex justify-content-end">
 							<div class="btn-group" role="group">
-								<s:url action="?" var="relatorio">
-									<s:param name="exameFuncionarioVo.funcionarioId"
-										value="exameFuncionarioVo.funcionarioId"></s:param>
-										<s:param name="exameFuncionarioVo.funcionarioId"
-										value="exameFuncionarioVo.funcionarioId"></s:param>
-								</s:url>
-								<a href="${relatorio}" class="btn btn-warning me-2">RELATORIO
-									DOS EXAMES</a>
 
 								<s:url action="todosExameFuncionario" var="exames">
 									<s:param name="exameFuncionarioVo.funcionarioId"
 										value="exameFuncionarioVo.funcionarioId"></s:param>
 								</s:url>
-								<a href="${exames}" class="btn btn-primary">NOVO EXAME</a>
+								<a href="${exames}" class="btn btn-primary"><s:text name="label.novo.exame" /></a>
 							</div>
 						</div>
 					</div>

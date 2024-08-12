@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title><s:text name="label.titulo.pagina.cadastro" /></title>
+<title>Novo Exame Funcionario</title>
 <link rel='stylesheet'
 	href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 </head>
@@ -21,11 +21,11 @@
 								<s:param name="exameFuncionarioVo.funcionarioId"
 									value="exameFuncionarioVo.funcionarioId"></s:param>
 							</s:url>
-							<a href="${buscar}" class="btn btn-success">Voltar</a>
+							<a href="${buscar}" class="btn btn-success"><s:text name="label.voltar"/></a>
 						</div>
 
 						<div class="col-sm">
-							<h5 class="card-title">Novo Exame do Funcionario</h5>
+							<h5 class="card-title">NOVO EXAME FUNCIONARIO</h5>
 						</div>
 					</div>
 				</div>
@@ -75,21 +75,5 @@
 	</div>
 
 	<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-	<script>
-		function prepararDados() {
-			const input = document.getElementById('dataRealizacao');
-			const dataFormatada = document
-					.getElementById('dataRealizacaoFormatada');
-
-			let valor = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-			if (valor.length === 8) {
-				let ano = valor.slice(0, 4);
-				let mes = valor.slice(4, 6);
-				let dia = valor.slice(6, 8);
-
-				dataFormatada.value = dia + "-" + mes + "-" + ano; // Formato yyyy-MM-dd
-			}
-		}
-	</script>
 </body>
 </html>

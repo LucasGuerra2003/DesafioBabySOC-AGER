@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.soc.sistema.dao.Dao;
-import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.vo.ExameVo;
 
 public class ExameDao extends Dao {

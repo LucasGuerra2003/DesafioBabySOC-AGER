@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title><s:text name="label.titulo.pagina.cadastro" /></title>
+<title>Edição de Exames Funcionario</title>
 <link rel='stylesheet'
 	href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 </head>
@@ -21,11 +21,11 @@
 								<s:param name="exameFuncionarioVo.funcionarioId"
 									value="exameFuncionarioVo.funcionarioId"></s:param>
 							</s:url>
-							<a href="${buscar}" class="btn btn-success">Voltar</a>
+							<a href="${buscar}" class="btn btn-success"><s:text name="label.voltar" /></a>
 						</div>
 
 						<div class="col-sm">
-							<h5 class="card-title">Editar Exame do Funcionario</h5>
+							<h5 class="card-title">EDIÇÃO DE EXAME FUNCIONARIO</h5>
 						</div>
 					</div>
 				</div>

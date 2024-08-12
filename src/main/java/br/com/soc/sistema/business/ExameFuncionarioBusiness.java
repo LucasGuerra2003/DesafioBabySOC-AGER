@@ -7,7 +7,7 @@ import java.util.List;
 import br.com.soc.sistema.dao.examesFuncionario.ExameFuncionarioDao;
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.vo.ExameFuncionarioVo;
-import br.com.soc.sistema.vo.ExameVo;
+import br.com.soc.sistema.vo.RelatorioVo;
 
 public class ExameFuncionarioBusiness {
 
@@ -60,7 +60,11 @@ public class ExameFuncionarioBusiness {
 	}
 	
 	
-	public List<ExameFuncionarioVo> buscarTodosExamesFuncinarios(){
+	public List<RelatorioVo> buscarTodosExamesFuncinarios(){
 		return dao.findAllFuncionarioExames();
+	}
+
+	public List<RelatorioVo> buscarExamesFuncinariosPorData(String dataRealizacaoInicial, String dataRealizacaoFinal){
+		return dao.findAllFuncionarioExamesPorData(dataRealizacaoInicial,dataRealizacaoFinal);
 	}
 }
